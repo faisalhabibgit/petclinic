@@ -13,26 +13,16 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.springframework.samples.petclinic.owner;
-
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
-
-import javax.persistence.CascadeType;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.OneToMany;
-import javax.persistence.Table;
-import javax.validation.constraints.Digits;
-import javax.validation.constraints.NotEmpty;
+package org.springframework.samples.petclinic.postgres.domain;
 
 import org.springframework.beans.support.MutableSortDefinition;
 import org.springframework.beans.support.PropertyComparator;
 import org.springframework.core.style.ToStringCreator;
-import org.springframework.samples.petclinic.model.Person;
+
+import javax.persistence.*;
+import javax.validation.constraints.Digits;
+import javax.validation.constraints.NotEmpty;
+import java.util.*;
 
 /**
  * Simple JavaBean domain object representing an owner.
@@ -43,8 +33,8 @@ import org.springframework.samples.petclinic.model.Person;
  * @author Michael Isvy
  */
 @Entity
-@Table(name = "owners")
-public class Owner extends Person {
+@Table(name = "postgres_owners")
+public class PostgresOwner extends PostgresPerson {
     @Column(name = "address")
     @NotEmpty
     private String address;
@@ -59,7 +49,7 @@ public class Owner extends Person {
     private String telephone;
 
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "owner")
-    private Set<Pet> pets;
+    private Set<PostgresPet> pets;
 
     public String getAddress() {
         return this.address;
@@ -85,25 +75,25 @@ public class Owner extends Person {
         this.telephone = telephone;
     }
 
-    protected Set<Pet> getPetsInternal() {
+    public Set<PostgresPet> getPetsInternal() {
         if (this.pets == null) {
             this.pets = new HashSet<>();
         }
         return this.pets;
     }
 
-    protected void setPetsInternal(Set<Pet> pets) {
+    public void setPetsInternal(Set<PostgresPet> pets) {
         this.pets = pets;
     }
 
-    public List<Pet> getPets() {
-        List<Pet> sortedPets = new ArrayList<>(getPetsInternal());
+    public List<PostgresPet> getPets() {
+        List<PostgresPet> sortedPets = new ArrayList<>(getPetsInternal());
         PropertyComparator.sort(sortedPets,
                 new MutableSortDefinition("name", true, true));
         return Collections.unmodifiableList(sortedPets);
     }
 
-    public void addPet(Pet pet) {
+    public void addPet(PostgresPet pet) {
         if (pet.isNew()) {
             getPetsInternal().add(pet);
         }
@@ -116,7 +106,7 @@ public class Owner extends Person {
      * @param name to test
      * @return true if pet name is already in use
      */
-    public Pet getPet(String name) {
+    public PostgresPet getPet(String name) {
         return getPet(name, false);
     }
 
@@ -126,9 +116,9 @@ public class Owner extends Person {
      * @param name to test
      * @return true if pet name is already in use
      */
-    public Pet getPet(String name, boolean ignoreNew) {
+    public PostgresPet getPet(String name, boolean ignoreNew) {
         name = name.toLowerCase();
-        for (Pet pet : getPetsInternal()) {
+        for (PostgresPet pet : getPetsInternal()) {
             if (!ignoreNew || !pet.isNew()) {
                 String compName = pet.getName();
                 compName = compName.toLowerCase();

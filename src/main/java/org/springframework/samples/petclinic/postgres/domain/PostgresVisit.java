@@ -13,17 +13,15 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.springframework.samples.petclinic.visit;
+package org.springframework.samples.petclinic.postgres.domain;
 
-import java.time.LocalDate;
+import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Table;
 import javax.validation.constraints.NotEmpty;
-
-import org.springframework.format.annotation.DateTimeFormat;
-import org.springframework.samples.petclinic.model.BaseEntity;
+import java.time.LocalDate;
 
 /**
  * Simple JavaBean domain object representing a visit.
@@ -32,8 +30,8 @@ import org.springframework.samples.petclinic.model.BaseEntity;
  * @author Dave Syer
  */
 @Entity
-@Table(name = "visits")
-public class Visit extends BaseEntity {
+@Table(name = "postgres_visits")
+public class PostgresVisit extends PostgresBaseEntity {
 
     @Column(name = "visit_date")
     @DateTimeFormat(pattern = "yyyy-MM-dd")
@@ -49,7 +47,7 @@ public class Visit extends BaseEntity {
     /**
      * Creates a new instance of Visit for the current date
      */
-    public Visit() {
+    public PostgresVisit() {
         this.date = LocalDate.now();
     }
 

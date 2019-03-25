@@ -13,17 +13,17 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.springframework.samples.petclinic.vet;
+package org.springframework.samples.petclinic.mysql.repo;
 
-import java.util.Collection;
-
-import org.springframework.cache.annotation.Cacheable;
 import org.springframework.dao.DataAccessException;
 import org.springframework.data.repository.Repository;
-import org.springframework.transaction.annotation.Transactional;
+import org.springframework.samples.petclinic.mysql.domain.BaseEntity;
+import org.springframework.samples.petclinic.mysql.domain.Visit;
+
+import java.util.List;
 
 /**
- * Repository class for <code>Vet</code> domain objects All method names are compliant with Spring Data naming
+ * Repository class for <code>Visit</code> domain objects All method names are compliant with Spring Data naming
  * conventions so this interface can easily be extended for Spring Data See here: http://static.springsource.org/spring-data/jpa/docs/current/reference/html/jpa.repositories.html#jpa.query-methods.query-creation
  *
  * @author Ken Krebs
@@ -31,16 +31,18 @@ import org.springframework.transaction.annotation.Transactional;
  * @author Sam Brannen
  * @author Michael Isvy
  */
-public interface VetRepository extends Repository<Vet, Integer> {
+public interface MysqlVisitRepository extends Repository<Visit, Integer> {
 
     /**
-     * Retrieve all <code>Vet</code>s from the data store.
+     * Save a <code>Visit</code> to the data store, either inserting or updating it.
      *
-     * @return a <code>Collection</code> of <code>Vet</code>s
+     * @param visit the <code>Visit</code> to save
+     * @see BaseEntity#isNew
      */
-    @Transactional(readOnly = true)
-    @Cacheable("vets")
-    Collection<Vet> findAll() throws DataAccessException;
+    void save(Visit visit) throws DataAccessException;
 
+    List<Visit> findByPetId(Integer petId);
+
+    List<Visit> findAll();
 
 }

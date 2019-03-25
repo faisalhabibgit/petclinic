@@ -13,13 +13,14 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.springframework.samples.petclinic.visit;
-
-import java.util.List;
+package org.springframework.samples.petclinic.postgres.repo;
 
 import org.springframework.dao.DataAccessException;
 import org.springframework.data.repository.Repository;
-import org.springframework.samples.petclinic.model.BaseEntity;
+import org.springframework.samples.petclinic.mysql.domain.BaseEntity;
+import org.springframework.samples.petclinic.postgres.domain.PostgresVisit;
+
+import java.util.List;
 
 /**
  * Repository class for <code>Visit</code> domain objects All method names are compliant with Spring Data naming
@@ -30,7 +31,7 @@ import org.springframework.samples.petclinic.model.BaseEntity;
  * @author Sam Brannen
  * @author Michael Isvy
  */
-public interface VisitRepository extends Repository<Visit, Integer> {
+public interface PostgresVisitRepository extends Repository<PostgresVisit, Integer> {
 
     /**
      * Save a <code>Visit</code> to the data store, either inserting or updating it.
@@ -38,8 +39,10 @@ public interface VisitRepository extends Repository<Visit, Integer> {
      * @param visit the <code>Visit</code> to save
      * @see BaseEntity#isNew
      */
-    void save(Visit visit) throws DataAccessException;
+    void save(PostgresVisit visit) throws DataAccessException;
 
-    List<Visit> findByPetId(Integer petId);
+    List<PostgresVisit> findByPetId(Integer petId);
+
+    List<PostgresVisit> findAll();
 
 }
