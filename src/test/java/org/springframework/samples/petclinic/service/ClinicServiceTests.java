@@ -16,25 +16,20 @@
 
 package org.springframework.samples.petclinic.service;
 
-import java.time.LocalDate;
-import java.util.Collection;
-
 import org.junit.Test;
 import org.junit.runner.RunWith;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
-import org.springframework.samples.petclinic.owner.Owner;
-import org.springframework.samples.petclinic.owner.OwnerRepository;
-import org.springframework.samples.petclinic.owner.Pet;
-import org.springframework.samples.petclinic.owner.PetRepository;
-import org.springframework.samples.petclinic.owner.PetType;
-import org.springframework.samples.petclinic.vet.Vet;
-import org.springframework.samples.petclinic.vet.VetRepository;
-import org.springframework.samples.petclinic.visit.Visit;
-import org.springframework.samples.petclinic.visit.VisitRepository;
+import org.springframework.samples.petclinic.mysql.domain.*;
+import org.springframework.samples.petclinic.mysql.repo.MysqlOwnerRepository;
+import org.springframework.samples.petclinic.mysql.repo.MysqlPetRepository;
+import org.springframework.samples.petclinic.mysql.repo.MysqlVetRepository;
+import org.springframework.samples.petclinic.mysql.repo.MysqlVisitRepository;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.transaction.annotation.Transactional;
+
+import java.time.LocalDate;
+import java.util.Collection;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -73,16 +68,16 @@ import static org.assertj.core.api.Assertions.assertThat;
 public class ClinicServiceTests {
 
     @Autowired
-    protected OwnerRepository owners;
+    protected MysqlOwnerRepository owners;
 
     @Autowired
-    protected PetRepository pets;
+    protected MysqlPetRepository pets;
 
     @Autowired
-    protected VisitRepository visits;
+    protected MysqlVisitRepository visits;
 
     @Autowired
-    protected VetRepository vets;
+    protected MysqlVetRepository vets;
 
     @Test
     public void shouldFindOwnersByLastName() {
