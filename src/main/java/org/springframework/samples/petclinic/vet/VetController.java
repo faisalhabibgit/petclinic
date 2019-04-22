@@ -71,6 +71,32 @@ class VetController {
         return vets;
     }
 
+    @GetMapping("/promotions.html")
+    public String showPromotions(){
+
+        if (VetToggles.togglePromotions == true)
+        {
+            return "promo/promotions.html";
+        } else {
+            throw new RuntimeException("No promotions");
+        }
+
+
+    }
+
+    @GetMapping("/promotionB.html")
+    public String showPromotionB(){
+
+        if (VetToggles.togglePromotionB == true)
+        {
+            return "promo/promotionB.html";
+        } else {
+            throw new RuntimeException("No promotions");
+        }
+
+
+    }
+
     public void loggingAccess(){
         logger.info("Page with insurance accessed: "+ vetListInsurance);
         logger.info("Page with no insurance accessed: "+ vetList);
